@@ -1,9 +1,12 @@
 import React from 'react'
-
-export default function TodoList() {
+import Todo from './Todo'
+export default function TodoList({ todos }) {
   return (
-    <div>
-        Task Manager
-    </div>
+    
+        
+        todos.map(todo => {
+            return <Todo todo={todo} />
+        })
+    
   )
 }
