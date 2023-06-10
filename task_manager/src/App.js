@@ -1,10 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TodoList from './TodoList';
 
+const LOCAL_STORAGE_KEY = "todoApp.todos"
 
 function App() {
   let [todos, setTodos] = useState([])
   let todoNameRef = useRef()
+
+useEffect(() => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
+}, [todos]) 
 
 function handleAddTask(e){
  const name = todoNameRef.current.value
