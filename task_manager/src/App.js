@@ -8,8 +8,14 @@ function App() {
   let todoNameRef = useRef()
 
 useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+  if (storedTodos) setTodos(storedTodos)
+  }, [])
+
+useEffect(() => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
 }, [todos]) 
+
 
 function handleAddTask(e){
  const name = todoNameRef.current.value
@@ -27,13 +33,18 @@ function handleChange(id){
   setTodos([...todos])
 }
 
+function handleClearTask(){
+  const newTask = todos.filter(todo => !todo.complete)
+  setTodos(newTask)
+}
+
   return (
     <>
     <TodoList todos = {todos} handleChange = {handleChange}/> 
     <input ref={todoNameRef} type='text' />
     <button onClick={handleAddTask}>Add A Task</button>
-    <button>Clear Completed Tasks</button>
-    <div></div>
+    <button onClick={handleClearTask}>Clear Completed Tasks</button>
+    <div>{todos.filter(todo => !todo.complete).length} left to do</div>
     </>
   )
     
